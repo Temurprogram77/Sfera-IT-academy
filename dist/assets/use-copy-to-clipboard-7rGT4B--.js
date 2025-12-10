@@ -1,0 +1,1 @@
+import{a as o}from"./vendor-core-CjMAIzdp.js";import{V as a}from"./index-zfbuQlMo.js";const p=()=>{const[e,r]=o.useState(null);return{copiedText:e,copyFn:async t=>{if(!navigator?.clipboard)return!1;try{return await navigator.clipboard.writeText(t),r(t),a.success("Copied!"),!0}catch{return r(null),!1}}}};export{p as u};

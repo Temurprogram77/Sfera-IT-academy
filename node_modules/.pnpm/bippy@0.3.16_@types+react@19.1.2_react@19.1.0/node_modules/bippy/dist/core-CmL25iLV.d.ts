@@ -1,0 +1,293 @@
+import * as React$2 from "react";
+import { BundleType, ComponentSelector, DevToolsConfig, Fiber, FiberRoot, Flags, HasPseudoClassSelector, HookType, HostConfig, LanePriority, Lanes, MutableSource, OpaqueHandle, OpaqueRoot, React$AbstractComponent, ReactConsumer, ReactContext, ReactPortal, ReactProvider, ReactProviderType, RefObject, RoleSelector, RootTag, Selector, Source, SuspenseHydrationCallbacks, TestNameSelector, TextSelector, Thenable, TransitionTracingCallbacks, TypeOfMode, WorkTag } from "react-reconciler";
+
+//#region src/types.d.ts
+interface ReactDevToolsGlobalHook {
+  checkDCE: (fn: unknown) => void;
+  supportsFiber: boolean;
+  supportsFlight: boolean;
+  renderers: Map<number, ReactRenderer>;
+  hasUnsupportedRendererAttached: boolean;
+  onCommitFiberRoot: (rendererID: number, root: FiberRoot, priority: void | number) => void;
+  onCommitFiberUnmount: (rendererID: number, fiber: Fiber$1) => void;
+  onPostCommitFiberRoot: (rendererID: number, root: FiberRoot) => void;
+  inject: (renderer: ReactRenderer) => number;
+  _instrumentationSource?: string;
+  _instrumentationIsActive?: boolean;
+  _sw?: boolean;
+}
+/**
+ * Represents a react-internal Fiber node.
+ */
+type Fiber$1<T = any> = Omit<Fiber, 'stateNode' | 'dependencies' | 'child' | 'sibling' | 'return' | 'alternate' | 'memoizedProps' | 'pendingProps' | 'memoizedState' | 'updateQueue'> & {
+  stateNode: T;
+  dependencies: Dependencies | null;
+  child: Fiber$1 | null;
+  sibling: Fiber$1 | null;
+  return: Fiber$1 | null;
+  alternate: Fiber$1 | null;
+  memoizedProps: Props;
+  pendingProps: Props;
+  memoizedState: MemoizedState;
+  updateQueue: {
+    lastEffect: Effect | null;
+    [key: string]: unknown;
+  };
+};
+interface ReactRenderer {
+  version: string;
+  bundleType: 0 | 1;
+  findFiberByHostInstance?: (hostInstance: unknown) => Fiber$1 | null;
+  currentDispatcherRef: React.RefObject<unknown>;
+}
+interface ContextDependency<T> {
+  context: ReactContext<T>;
+  memoizedValue: T;
+  observedBits: number;
+  next: ContextDependency<unknown> | null;
+}
+interface Dependencies {
+  lanes: Lanes;
+  firstContext: ContextDependency<unknown> | null;
+}
+interface Effect {
+  next: Effect | null;
+  create: (...args: unknown[]) => unknown;
+  destroy: ((...args: unknown[]) => unknown) | null;
+  deps: unknown[] | null;
+  tag: number;
+  [key: string]: unknown;
+}
+interface MemoizedState {
+  memoizedState: unknown;
+  next: MemoizedState | null;
+  [key: string]: unknown;
+}
+interface Props {
+  [key: string]: unknown;
+}
+declare global {
+  var __REACT_DEVTOOLS_GLOBAL_HOOK__: ReactDevToolsGlobalHook | undefined;
+} //#endregion
+//#region src/install-hook-script-string.d.ts
+declare const INSTALL_HOOK_SCRIPT_STRING = "(()=>{try{var t=()=>{};const n=new Map;let o=0;globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__={checkDCE:t,supportsFiber:!0,supportsFlight:!0,hasUnsupportedRendererAttached:!1,renderers:n,onCommitFiberRoot:t,onCommitFiberUnmount:t,onPostCommitFiberRoot:t,inject(t){var e=++o;return n.set(e,t),globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__._instrumentationIsActive=!0,e},_instrumentationIsActive:!1,_script:!0}}catch{}})()";
+
+//#endregion
+//#region src/rdt-hook.d.ts
+declare const version: string | undefined;
+declare const BIPPY_INSTRUMENTATION_STRING: string;
+declare const isRealReactDevtools: (rdtHook?: ReactDevToolsGlobalHook) => boolean;
+declare const isReactRefresh: (rdtHook?: ReactDevToolsGlobalHook) => boolean;
+declare const _renderers: Set<ReactRenderer>;
+declare const installRDTHook: (onActive?: () => unknown) => ReactDevToolsGlobalHook;
+declare const patchRDTHook: (onActive?: () => unknown) => void;
+declare const hasRDTHook: () => boolean;
+/**
+ * Returns the current React DevTools global hook.
+ */
+declare const getRDTHook: (onActive?: () => unknown) => ReactDevToolsGlobalHook;
+declare const isClientEnvironment: () => boolean;
+/**
+ * Usually used purely for side effect
+ */
+declare const safelyInstallRDTHook: () => void;
+
+//#endregion
+//#region src/core.d.ts
+declare const FunctionComponentTag = 0;
+declare const ClassComponentTag = 1;
+declare const HostRootTag = 3;
+declare const HostComponentTag = 5;
+declare const HostTextTag = 6;
+declare const FragmentTag = 7;
+declare const ContextConsumerTag = 9;
+declare const ForwardRefTag = 11;
+declare const SuspenseComponentTag = 13;
+declare const MemoComponentTag = 14;
+declare const SimpleMemoComponentTag = 15;
+declare const DehydratedSuspenseComponentTag = 18;
+declare const OffscreenComponentTag = 22;
+declare const LegacyHiddenComponentTag = 23;
+declare const HostHoistableTag = 26;
+declare const HostSingletonTag = 27;
+declare const CONCURRENT_MODE_NUMBER = 60111;
+declare const ELEMENT_TYPE_SYMBOL_STRING = "Symbol(react.element)";
+declare const TRANSITIONAL_ELEMENT_TYPE_SYMBOL_STRING = "Symbol(react.transitional.element)";
+declare const CONCURRENT_MODE_SYMBOL_STRING = "Symbol(react.concurrent_mode)";
+declare const DEPRECATED_ASYNC_MODE_SYMBOL_STRING = "Symbol(react.async_mode)";
+/**
+ * Returns `true` if object is a React Element.
+ *
+ * @see https://react.dev/reference/react/isValidElement
+ */
+declare const isValidElement: (element: unknown) => element is React$2.ReactElement;
+/**
+ * Returns `true` if object is a React Fiber.
+ */
+declare const isValidFiber: (fiber: unknown) => fiber is Fiber$1;
+/**
+ * Returns `true` if fiber is a host fiber. Host fibers are DOM nodes in react-dom, `View` in react-native, etc.
+ *
+ * @see https://reactnative.dev/architecture/glossary#host-view-tree-and-host-view
+ */
+declare const isHostFiber: (fiber: Fiber$1) => boolean;
+/**
+ * Returns `true` if fiber is a composite fiber. Composite fibers are fibers that can render (like functional components, class components, etc.)
+ *
+ * @see https://reactnative.dev/architecture/glossary#react-composite-components
+ */
+declare const isCompositeFiber: (fiber: Fiber$1) => boolean;
+/**
+ * Traverses up or down a {@link Fiber}'s contexts, return `true` to stop and select the current and previous context value.
+ */
+declare const traverseContexts: (fiber: Fiber$1, selector: (nextValue: ContextDependency<unknown> | null | undefined, prevValue: ContextDependency<unknown> | null | undefined) => boolean | void) => boolean;
+/**
+ * Traverses up or down a {@link Fiber}'s states, return `true` to stop and select the current and previous state value. This stores both state values and effects.
+ */
+declare const traverseState: (fiber: Fiber$1, selector: (nextValue: MemoizedState | null | undefined, prevValue: MemoizedState | null | undefined) => boolean | void) => boolean;
+/**
+ * Traverses up or down a {@link Fiber}'s props, return `true` to stop and select the current and previous props value.
+ */
+declare const traverseProps: (fiber: Fiber$1, selector: (propName: string, nextValue: unknown, prevValue: unknown) => boolean | void) => boolean;
+/**
+ * Returns `true` if the {@link Fiber} has rendered. Note that this does not mean the fiber has rendered in the current commit, just that it has rendered in the past.
+ */
+declare const didFiberRender: (fiber: Fiber$1) => boolean;
+/**
+ * Returns `true` if the {@link Fiber} has committed. Note that this does not mean the fiber has committed in the current commit, just that it has committed in the past.
+ */
+declare const didFiberCommit: (fiber: Fiber$1) => boolean;
+/**
+ * Returns all host {@link Fiber}s that have committed and rendered.
+ */
+declare const getMutatedHostFibers: (fiber: Fiber$1) => Fiber$1[];
+/**
+ * Returns the stack of {@link Fiber}s from the current fiber to the root fiber.
+ *
+ * @example
+ * ```ts
+ * [fiber, fiber.return, fiber.return.return, ...]
+ * ```
+ */
+declare const getFiberStack: (fiber: Fiber$1) => Fiber$1[];
+/**
+ * Returns `true` if the {@link Fiber} should be filtered out during reconciliation.
+ */
+declare const shouldFilterFiber: (fiber: Fiber$1) => boolean;
+/**
+ * Returns the nearest host {@link Fiber} to the current {@link Fiber}.
+ */
+declare const getNearestHostFiber: (fiber: Fiber$1, ascending?: boolean) => Fiber$1 | null;
+/**
+ * Returns all host {@link Fiber}s in the tree that are associated with the current {@link Fiber}.
+ */
+declare const getNearestHostFibers: (fiber: Fiber$1) => Fiber$1[];
+/**
+ * Traverses up or down a {@link Fiber}, return `true` to stop and select a node.
+ */
+declare const traverseFiber: (fiber: Fiber$1 | null, selector: (node: Fiber$1) => boolean | void, ascending?: boolean) => Fiber$1 | null;
+/**
+ * Returns the timings of the {@link Fiber}.
+ *
+ * @example
+ * ```ts
+ * const { selfTime, totalTime } = getTimings(fiber);
+ * console.log(selfTime, totalTime);
+ * ```
+ */
+declare const getTimings: (fiber?: Fiber$1 | null | undefined) => {
+  selfTime: number;
+  totalTime: number;
+};
+/**
+ * Returns `true` if the {@link Fiber} uses React Compiler's memo cache.
+ */
+declare const hasMemoCache: (fiber: Fiber$1) => boolean;
+/**
+ * Returns the type (e.g. component definition) of the {@link Fiber}
+ */
+declare const getType: (type: unknown) => React$2.ComponentType<unknown> | null;
+/**
+ * Returns the display name of the {@link Fiber} type.
+ */
+declare const getDisplayName: (type: unknown) => string | null;
+/**
+ * Returns the build type of the React renderer.
+ */
+declare const detectReactBuildType: (renderer: ReactRenderer) => "development" | "production";
+/**
+ * Returns `true` if bippy's instrumentation is active.
+ */
+declare const isInstrumentationActive: () => boolean;
+/**
+ * Returns the latest fiber (since it may be double-buffered).
+ */
+declare const getLatestFiber: (fiber: Fiber$1) => Fiber$1;
+type RenderPhase = 'mount' | 'update' | 'unmount';
+type RenderHandler = <S>(fiber: Fiber$1, phase: RenderPhase, state?: S) => unknown;
+declare const fiberIdMap: WeakMap<Fiber$1, number>;
+declare const setFiberId: (fiber: Fiber$1, id?: number) => void;
+declare const getFiberId: (fiber: Fiber$1) => number;
+declare const mountFiberRecursively: (onRender: RenderHandler, firstChild: Fiber$1, traverseSiblings: boolean) => void;
+declare const updateFiberRecursively: (onRender: RenderHandler, nextFiber: Fiber$1, prevFiber: Fiber$1, parentFiber: Fiber$1 | null) => void;
+declare const unmountFiber: (onRender: RenderHandler, fiber: Fiber$1) => void;
+declare const unmountFiberChildrenRecursively: (onRender: RenderHandler, fiber: Fiber$1) => void;
+/**
+ * Creates a fiber visitor function. Must pass a fiber root and a render handler.
+ * @example
+ * traverseRenderedFibers(root, (fiber, phase) => {
+ *   console.log(phase)
+ * })
+ */
+declare const traverseRenderedFibers: (root: FiberRoot, onRender: RenderHandler) => void;
+/**
+ * @deprecated use `traverseRenderedFibers` instead
+ */
+declare const createFiberVisitor: ({
+  onRender
+}: {
+  onRender: RenderHandler;
+  onError: (error: unknown) => unknown;
+}) => (<S>(_rendererID: number, root: FiberRoot | Fiber$1, _state?: S) => void);
+interface InstrumentationOptions {
+  onCommitFiberRoot?: (rendererID: number, root: FiberRoot, priority: void | number) => unknown;
+  onCommitFiberUnmount?: (rendererID: number, fiber: Fiber$1) => unknown;
+  onPostCommitFiberRoot?: (rendererID: number, root: FiberRoot) => unknown;
+  onActive?: () => unknown;
+  name?: string;
+}
+/**
+ * Instruments the DevTools hook.
+ * @example
+ * const hook = instrument({
+ *   onActive() {
+ *     console.log('initialized');
+ *   },
+ *   onCommitFiberRoot(rendererID, root) {
+ *     console.log('fiberRoot', root.current)
+ *   },
+ * });
+ */
+declare const instrument: (options: InstrumentationOptions) => ReactDevToolsGlobalHook;
+declare const getFiberFromHostInstance: <T>(hostInstance: T) => Fiber$1 | null;
+declare const INSTALL_ERROR: Error;
+declare const _fiberRoots: Set<any>;
+declare const secure: (options: InstrumentationOptions, secureOptions?: {
+  minReactMajorVersion?: number;
+  dangerouslyRunInProduction?: boolean;
+  onError?: (error?: unknown) => unknown;
+  installCheckTimeout?: number;
+  isProduction?: boolean;
+}) => InstrumentationOptions;
+/**
+ * a wrapper around the {@link instrument} function that sets the `onCommitFiberRoot` hook.
+ *
+ * @example
+ * onCommitFiberRoot((root) => {
+ *   console.log(root.current);
+ * });
+ */
+declare const onCommitFiberRoot: (handler: (root: FiberRoot) => void) => ReactDevToolsGlobalHook;
+
+//#endregion
+export { BIPPY_INSTRUMENTATION_STRING as BIPPY_INSTRUMENTATION_STRING$1, BundleType, CONCURRENT_MODE_NUMBER as CONCURRENT_MODE_NUMBER$1, CONCURRENT_MODE_SYMBOL_STRING as CONCURRENT_MODE_SYMBOL_STRING$1, ClassComponentTag as ClassComponentTag$1, ComponentSelector, ContextConsumerTag as ContextConsumerTag$1, ContextDependency, DEPRECATED_ASYNC_MODE_SYMBOL_STRING as DEPRECATED_ASYNC_MODE_SYMBOL_STRING$1, DehydratedSuspenseComponentTag as DehydratedSuspenseComponentTag$1, Dependencies, DevToolsConfig, ELEMENT_TYPE_SYMBOL_STRING as ELEMENT_TYPE_SYMBOL_STRING$1, Effect, Fiber$1 as Fiber, FiberRoot, Flags, ForwardRefTag as ForwardRefTag$1, FragmentTag as FragmentTag$1, FunctionComponentTag as FunctionComponentTag$1, HasPseudoClassSelector, HookType, HostComponentTag as HostComponentTag$1, HostConfig, HostHoistableTag as HostHoistableTag$1, HostRootTag as HostRootTag$1, HostSingletonTag as HostSingletonTag$1, HostTextTag as HostTextTag$1, INSTALL_ERROR as INSTALL_ERROR$1, INSTALL_HOOK_SCRIPT_STRING as INSTALL_HOOK_SCRIPT_STRING$1, InstrumentationOptions, LanePriority, Lanes, LegacyHiddenComponentTag as LegacyHiddenComponentTag$1, MemoComponentTag as MemoComponentTag$1, MemoizedState, MutableSource, OffscreenComponentTag as OffscreenComponentTag$1, OpaqueHandle, OpaqueRoot, Props, React$AbstractComponent, ReactConsumer, ReactContext, ReactDevToolsGlobalHook, ReactPortal, ReactProvider, ReactProviderType, ReactRenderer, RefObject, RenderHandler, RenderPhase, RoleSelector, RootTag, Selector, SimpleMemoComponentTag as SimpleMemoComponentTag$1, Source, SuspenseComponentTag as SuspenseComponentTag$1, SuspenseHydrationCallbacks, TRANSITIONAL_ELEMENT_TYPE_SYMBOL_STRING as TRANSITIONAL_ELEMENT_TYPE_SYMBOL_STRING$1, TestNameSelector, TextSelector, Thenable, TransitionTracingCallbacks, TypeOfMode, WorkTag, _fiberRoots as _fiberRoots$1, _renderers as _renderers$1, createFiberVisitor as createFiberVisitor$1, detectReactBuildType as detectReactBuildType$1, didFiberCommit as didFiberCommit$1, didFiberRender as didFiberRender$1, fiberIdMap as fiberIdMap$1, getDisplayName as getDisplayName$1, getFiberFromHostInstance as getFiberFromHostInstance$1, getFiberId as getFiberId$1, getFiberStack as getFiberStack$1, getLatestFiber as getLatestFiber$1, getMutatedHostFibers as getMutatedHostFibers$1, getNearestHostFiber as getNearestHostFiber$1, getNearestHostFibers as getNearestHostFibers$1, getRDTHook as getRDTHook$1, getTimings as getTimings$1, getType as getType$1, hasMemoCache as hasMemoCache$1, hasRDTHook as hasRDTHook$1, installRDTHook as installRDTHook$1, instrument as instrument$1, isClientEnvironment as isClientEnvironment$1, isCompositeFiber as isCompositeFiber$1, isHostFiber as isHostFiber$1, isInstrumentationActive as isInstrumentationActive$1, isReactRefresh as isReactRefresh$1, isRealReactDevtools as isRealReactDevtools$1, isValidElement as isValidElement$1, isValidFiber as isValidFiber$1, mountFiberRecursively as mountFiberRecursively$1, onCommitFiberRoot as onCommitFiberRoot$1, patchRDTHook as patchRDTHook$1, safelyInstallRDTHook as safelyInstallRDTHook$1, secure as secure$1, setFiberId as setFiberId$1, shouldFilterFiber as shouldFilterFiber$1, traverseContexts as traverseContexts$1, traverseFiber as traverseFiber$1, traverseProps as traverseProps$1, traverseRenderedFibers as traverseRenderedFibers$1, traverseState as traverseState$1, unmountFiber as unmountFiber$1, unmountFiberChildrenRecursively as unmountFiberChildrenRecursively$1, updateFiberRecursively as updateFiberRecursively$1, version as version$1 };

@@ -1,0 +1,1 @@
+import{j as e,aF as t}from"./index-zfbuQlMo.js";import"./vendor-utils-8S64T46y.js";import"./vendor-core-CjMAIzdp.js";import"./vendor-ui-bvpj1Elq.js";function n(){return e.jsx(t,{as:"h3",children:"Menu Level: 3a"})}export{n as default};

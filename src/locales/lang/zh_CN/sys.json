@@ -1,0 +1,177 @@
+{
+  "sys": {
+    "api": {
+      "operationSuccess": "Amal muvaffaqiyatli bajarildi",
+      "operationFailed": "Amal bajarilmadi",
+      "errorTip": "Xato haqida ogohlantirish",
+      "successTip": "Muvaffaqiyat ogohlantirishi",
+      "errorMessage": "Amal bajarilmadi, tizimda nosozlik!",
+      "timeoutMessage": "Kirish vaqti tugadi, qayta tizimga kiring!",
+      "apiTimeoutMessage": "So‘rov vaqti tugadi, sahifani yangilab qayta urinib ko‘ring!",
+      "apiRequestFailed": "So‘rovda xato, iltimos birozdan so‘ng qayta urinib ko‘ring",
+      "networkException": "Tarmoq xatosi",
+      "networkExceptionMsg": "Tarmoqda nosozlik, iltimos internet ulanishingizni tekshiring!",
+
+      "errMsg401": "Foydalanuvchiga ruxsat berilmagan (token, login yoki parol noto‘g‘ri)!",
+      "errMsg403": "Foydalanuvchiga ruxsat berilgan, biroq kirish taqiqlangan!",
+      "errMsg404": "Tarmoq xatosi, resurs topilmadi!",
+      "errMsg405": "Tarmoq xatosi, so‘rov usuli ruxsat etilmagan!",
+      "errMsg408": "So‘rov vaqti tugadi!",
+      "errMsg500": "Server xatosi, administrator bilan bog‘laning!",
+      "errMsg501": "Tarmoq qo‘llab-quvvatlanmagan!",
+      "errMsg502": "Tarmoq xatosi!",
+      "errMsg503": "Xizmat mavjud emas, server yuklangan yoki texnik xizmat ko‘rsatishda!",
+      "errMsg504": "Tarmoq vaqti tugadi!",
+      "errMsg505": "HTTP versiyasi ushbu so‘rovni qo‘llab-quvvatlamaydi!"
+    },
+
+    "login": {
+      "backSignIn": "Orqaga qaytish",
+      "signInFormTitle": "Hisobingizga kirish",
+      "mobileSignInFormTitle": "Telefon orqali kirish",
+      "qrSignInFormTitle": "QR orqali kirish",
+      "signUpFormTitle": "Ro‘yxatdan o‘tish",
+      "forgetFormTitle": "Parolni tiklash",
+
+      "signInPrimaryTitle": "Xush kelibsiz",
+      "signInSecondTitle": "Tayyor foydalanish uchun boshqaruv tizimi",
+      "signInDesc": "Boshlash uchun shaxsiy ma’lumotlaringizni kiriting!",
+      "policy": "Men maxfiylik siyosatiga roziman",
+      "scanSign": "QR kodni skan qiling va “Tasdiqlash” tugmasini bosing",
+      "forgetFormSecondTitle": "Hisobingiz bilan bog‘langan email manzilni kiriting, biz parolni tiklash uchun havola yuboramiz.",
+
+      "loginButton": "Kirish",
+      "registerButton": "Ro‘yxatdan o‘tish",
+      "rememberMe": "Meni eslab qol",
+      "forgetPassword": "Parolni unutdingizmi?",
+      "otherSignIn": "Boshqa kirish usullari",
+      "sendSmsButton": "SMS kod yuborish",
+      "sendSmsText": "{{second}} soniyadan keyin qayta urinib ko‘ring",
+      "sendEmailButton": "Email yuborish",
+
+      "loginSuccessTitle": "Kirish muvaffaqiyatli",
+      "loginSuccessDesc": "Yana xush kelibsiz",
+
+      "accountPlaceholder": "Hisobni kiriting",
+      "passwordPlaceholder": "Parolni kiriting",
+      "confirmPasswordPlaceholder": "Parolni tasdiqlang",
+      "emaildPlaceholder": "Email manzilni kiriting",
+      "smsPlaceholder": "SMS kodni kiriting",
+      "mobilePlaceholder": "Telefon raqamni kiriting",
+      "policyPlaceholder": "Ro‘yxatdan o‘tish uchun rozilik talab qilinadi",
+      "diffPwd": "Kiritilgan parollar bir-biriga mos kelmadi",
+
+      "userName": "Hisob",
+      "password": "Parol",
+      "confirmPassword": "Parolni tasdiqlash",
+      "email": "Email",
+      "smsCode": "SMS kodi",
+      "mobile": "Telefon raqam",
+
+      "registerAndAgree": "Ro‘yxatdan o‘tish orqali men roziman",
+      "termsOfService": " Xizmat ko‘rsatish shartlari ",
+      "privacyPolicy": " Maxfiylik siyosati ",
+      "logout": "Chiqish",
+      "signInFormDescription": "Hisobingizga kirish uchun ma’lumotlarni kiriting",
+      "noAccount": "Hisobingiz yo‘qmi?"
+    },
+
+    "tab": {
+      "fullscreen": "To‘liq ekran",
+      "refresh": "Yangilash",
+      "close": "Yopish",
+      "closeOthers": "Boshqa yorliqlarni yopish",
+      "closeAll": "Barchasini yopish",
+      "closeLeft": "Chapdagilarni yopish",
+      "closeRight": "O‘ngdagilarni yopish"
+    },
+
+    "nav": {
+      "dashboard": "Boshqaruv paneli",
+      "pages": "Sahifalar",
+      "others": "Boshqa",
+      "ui": "UI",
+      "custom_ui_components": "Maxsus UI komponentlar",
+      "workbench": "Ish maydoni",
+      "analysis": "Tahlil",
+      "management": "Boshqaruv",
+      "user": {
+        "index": "Foydalanuvchi",
+        "profile": "Profil",
+        "account": "Hisob"
+      },
+      "system": {
+        "index": "Tizim",
+        "organization": "Tashkilot",
+        "permission": "Ruxsatlar",
+        "role": "Rollar",
+        "user": "Foydalanuvchi",
+        "user_detail": "Foydalanuvchi tafsilotlari"
+      },
+      "blog": "Blog",
+      "components": "Komponentlar",
+      "icon": "Ikonkalar",
+      "animate": "Animatsiya",
+      "scroll": "Skroll",
+      "markdown": "Markdown",
+      "editor": "Matn muharriri",
+      "i18n": "Ko‘p tillilik",
+      "upload": "Yuklash",
+      "chart": "Diagrammalar",
+      "toast": "Bildirishnomalar",
+      "functions": "Funksiyalar",
+      "clipboard": "Clipboard",
+      "token_expired": "Token muddati tugagan",
+      "menulevel": {
+        "index": "Ko‘p darajali menyu",
+        "1a": "1-darajali menyu 1a",
+        "1b": {
+          "index": "1-darajali menyu 1b",
+          "2a": "2-darajali menyu 2a",
+          "2b": {
+            "index": "2-darajali menyu 2b",
+            "3a": "3-darajali menyu 3a",
+            "3b": "3-darajali menyu 3b"
+          }
+        }
+      },
+      "disabled": "O‘chirib qo‘yilgan element",
+      "label": "Yorliq",
+      "link": "Havola",
+      "external_link": "Tashqi havola",
+      "iframe": "Ichki iframe",
+      "blank": "Bo‘sh sahifa",
+      "calendar": "Kalendar",
+      "kanban": "Kanban doskasi",
+      "permission": "Ruxsatlar",
+      "permission.page_test": "Sahifa ruxsatini tekshirish",
+      "error": {
+        "index": "Xatolik sahifalari",
+        "403": "403",
+        "404": "404",
+        "500": "500"
+      }
+    },
+
+    "docs": "Hujjatlar",
+
+    "settings": {
+      "title": "Sozlamalar",
+      "mode": "Rejim",
+      "layout": "Tuzilish",
+      "stretch": "Kengaytirish",
+      "stretchTip": "Faqat ekran kengligi 1280px (xl) dan katta bo‘lsa ishlaydi",
+      "presetThemes": "Tayyor mavzular",
+      "font": "Shrift",
+      "family": "Shrift oilasi",
+      "size": "Shrift o‘lchami",
+      "page": "Sahifa",
+      "breadcrumb": "Navigatsiya yo‘li",
+      "multiTab": "Ko‘p yorliqli rejim",
+      "darkSidebar": "Qorong‘i yon panel",
+      "accordion": "Akkordeon menyu",
+      "fullscreen": "To‘liq ekran",
+      "exitFullscreen": "To‘liq ekrandan chiqish"
+    }
+  }
+}
