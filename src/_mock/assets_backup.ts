@@ -263,18 +263,6 @@ export const DB_MENU: Menu[] = [
 		path: "/functions/token_expired",
 		component: "/pages/functions/token-expired",
 	},
-
-	// group_others
-	{
-		id: "permission",
-		parentId: "group_others",
-		name: "sys.nav.permission",
-		code: "permission",
-		icon: "mingcute:safe-lock-fill",
-		type: MENU,
-		path: "/permission",
-		component: "/pages/sys/others/permission",
-	},
 	{
 		id: "permission_page_test",
 		parentId: "group_others",

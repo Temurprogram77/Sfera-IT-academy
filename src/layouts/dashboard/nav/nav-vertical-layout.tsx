@@ -1,5 +1,7 @@
 import { Icon } from "@/components/icon";
-import Logo from "@/components/logo";
+// import Logo from "@/components/logo";
+import logoOne from "../../../assets/icons/logoOne.png"
+import logoTwo from "../../../assets/icons/logoTwo.png"
 import { NavMini, NavVertical } from "@/components/nav";
 import type { NavProps } from "@/components/nav/types";
 import { GLOBAL_CONFIG } from "@/global-config";
@@ -40,7 +42,8 @@ export function NavVerticalLayout({ data, className }: Props) {
 				})}
 			>
 				<div className="flex items-center justify-center">
-					<Logo />
+					{/* <Logo /> */}
+					<img src={logoOne} alt="logo" className="w-[40px]" />
 					<span
 						className="text-xl font-bold transition-all duration-300 ease-in-out"
 						style={{

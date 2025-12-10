@@ -181,11 +181,6 @@ export const frontendNavData: NavProps["data"] = [
 		name: "sys.nav.others",
 		items: [
 			{
-				title: "sys.nav.permission",
-				path: "/permission",
-				icon: <Icon icon="mingcute:safe-lock-fill" size="24" />,
-			},
-			{
 				title: "sys.nav.permission.page_test",
 				path: "/permission/page-test",
 				icon: <Icon icon="mingcute:safe-lock-fill" size="24" />,

@@ -19,7 +19,7 @@ export const LANGUAGE_MAP: Record<Locale, Language> = {
 	[LocalEnum.zh_CN]: {
 		locale: LocalEnum.zh_CN,
 		label: "Uzbek",
-		icon: "flag-ru",
+		icon: "flag-uz",
 		antdLocal: zh_CN,
 	},
 	[LocalEnum.en_US]: {

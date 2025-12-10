@@ -99,7 +99,6 @@
 			"iframe": "Iframe",
 			"kanban": "Kanban",
 			"label": "Item Label",
-			"permission": "Permission",
 			"permission.page_test": "Page Permission Test",
 			"management": "Management",
 			"markdown": "Markdown",
@@ -133,7 +132,7 @@
 				"index": "User",
 				"profile": "Profile"
 			},
-			"workbench": "Workbench"
+			"workbench": "Dashboard"
 		},
 		"settings": {
 			"accordion": "Accordion Menu",
