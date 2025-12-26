@@ -1,32 +1,106 @@
-import Logo from "@/assets/icons/logoTwo.png";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { QueryClient } from "@tanstack/react-query";
-import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
-import { Helmet, HelmetProvider } from "react-helmet-async";
-import { MotionLazy } from "./components/animate/motion-lazy";
-import { RouteLoadingProgress } from "./components/loading";
-import Toast from "./components/toast";
-import { GLOBAL_CONFIG } from "./global-config";
-import { AntdAdapter } from "./theme/adapter/antd.adapter";
-import { ThemeProvider } from "./theme/theme-provider";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import SignIn from "./pages/AuthPages/SignIn";
+import SignUp from "./pages/AuthPages/SignUp";
+import NotFound from "./pages/OtherPage/NotFound";
+import UserProfiles from "./pages/UserProfiles";
+import Videos from "./pages/UiElements/Videos";
+import Images from "./pages/UiElements/Images";
+import Alerts from "./pages/UiElements/Alerts";
+import Badges from "./pages/UiElements/Badges";
+import Avatars from "./pages/UiElements/Avatars";
+import Buttons from "./pages/UiElements/Buttons";
+import LineChart from "./pages/Charts/LineChart";
+import BarChart from "./pages/Charts/BarChart";
+import Calendar from "./pages/Calendar";
+import BasicTables from "./pages/Tables/BasicTables";
+import FormElements from "./pages/Forms/FormElements";
+import Blank from "./pages/Blank";
+import AppLayout from "./layout/AppLayout";
+import { ScrollToTop } from "./components/common/ScrollToTop";
+import Home from "./pages/Dashboard/Home";
+import Admin from "./dashboards/admin";
+import SuperAdmin from "./dashboards/super_admin";
+import Teacher from "./dashboards/teacher";
+import Student from "./dashboards/student";
+import Parent from "./dashboards/parent";
+import Teachers from "./pages/Teachers/Teachers";
+import Students from "./pages/Students/Students";
+import Parents from "./pages/Parents/Parents";
+import Attendance from "./pages/Attendance/Attendance";
+import Groups from "./pages/Groups/Groups";
+import Rooms from "./pages/Rooms/Rooms";
 
-function App({ children }: { children: React.ReactNode }) {
-	return (
-		<HelmetProvider>
-			<QueryClientProvider client={new QueryClient()}>
-				<ThemeProvider adapters={[AntdAdapter]}>
-					<VercelAnalytics debug={import.meta.env.PROD} />
-					<Helmet>
-						<title>{GLOBAL_CONFIG.appName}</title>
-						<link rel="icon" href={Logo} />
-					</Helmet>
-					<Toast />
-					<RouteLoadingProgress />
-					<MotionLazy>{children}</MotionLazy>
-				</ThemeProvider>
-			</QueryClientProvider>
-		</HelmetProvider>
-	);
+// Protected Route Component
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const isLoggedIn = !!localStorage.getItem("token"); // token bor bo'lsa login qilgan
+  return isLoggedIn ? children : <Navigate to="/signin" replace />;
+};
+
+export default function App() {
+  return (
+    <Router>
+      <ScrollToTop />
+      <Routes>
+        {/* Auth Routes */}
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+
+        {/* Protected Dashboard Routes */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <AppLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Home />} />
+          <Route path="dashboard/admin" element={<Admin />} />
+          <Route path="dashboard/super_admin" element={<SuperAdmin />} />
+          <Route path="dashboard/teacher" element={<Teacher />} />
+          <Route path="dashboard/student" element={<Student />} />
+          <Route path="dashboard/parent" element={<Parent />} />
+          <Route path="teachers" element={<Teachers />} />
+          <Route path="students" element={<Students />} />
+          <Route path="parents" element={<Parents />} />
+          <Route path="attendance" element={<Attendance />} />
+          <Route path="groups" element={<Groups />} />
+          <Route path="rooms" element={<Rooms />} />
+
+          {/* Others Pages */}
+          <Route path="profile" element={<UserProfiles />} />
+          <Route path="calendar" element={<Calendar />} />
+          <Route path="blank" element={<Blank />} />
+
+          {/* Forms */}
+          <Route path="form-elements" element={<FormElements />} />
+
+          {/* Tables */}
+          <Route path="basic-tables" element={<BasicTables />} />
+
+          {/* UI Elements */}
+          <Route path="alerts" element={<Alerts />} />
+          <Route path="avatars" element={<Avatars />} />
+          <Route path="badge" element={<Badges />} />
+          <Route path="buttons" element={<Buttons />} />
+          <Route path="images" element={<Images />} />
+          <Route path="videos" element={<Videos />} />
+
+          {/* Charts */}
+          <Route path="line-chart" element={<LineChart />} />
+          <Route path="bar-chart" element={<BarChart />} />
+        </Route>
+
+        {/* Fallback */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Router>
+  );
 }
-
-export default App;
